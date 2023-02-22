@@ -18,11 +18,12 @@ class ContactListViewController: UIViewController {
     
     var contactChosen: String = ""
     var userAddress: String = ""
-    var lastMessages: [String: String] = [String: String]()
+    
     
     let db = Firestore.firestore()
     
-    var friendList : [String] = []
+    var contacts = [Contact]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +31,12 @@ class ContactListViewController: UIViewController {
         tableView.delegate = self
         title = K.appStrings.contacts
         navigationItem.hidesBackButton = true
-        loadContactList()
+        loadUserContacts()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadContactList()
+        loadUserContacts()
         
     }
     
@@ -43,58 +44,31 @@ class ContactListViewController: UIViewController {
         performSegue(withIdentifier: K.SegueId.contactToAddFriend, sender: self)
     }
     
-    func loadContactList() {
-        let collection = db.collection(K.FBase.userFriendsCollection)
-        let doc = collection.document(userAddress)
-        doc.addSnapshotListener { docSnapShot, error in
-            if let error {
-                print(error)
-            } else {
-                if let data = docSnapShot?.data() {
-                    if let fl = data["friendList"] as? [String] {
-                        self.friendList = fl
-                        self.loadLastMessages()
+    func loadUserContacts() {
+        FBManager.loadContactsEmailList { contactsEmailList in
+            if let contactsEmailList = contactsEmailList {
+                FBManager.loadLastMessageFromContacts(for: contactsEmailList) { contacts in
+                    if let contacts = contacts {
+                        self.contacts = contacts
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
+                    } else {
+                        print("error loading last messages")
                     }
                 }
+            } else {
+                print("error loading friendlist")
             }
         }
     }
     
-    func loadLastMessages()  {
-        for friend in friendList {
-            let conversationQuery = db.collection(K.FBase.messageCollection)
-                .whereField(K.FBase.interlocutorsField, in: ["\(friend),\(userAddress)","\(userAddress),\(friend)"])
-                .order(by: K.FBase.dateField, descending: true)
-                .limit(to: 1)
-            conversationQuery.addSnapshotListener { querySnapshot, error in
-                if let error {
-                    print(error)
-                } else {
-                    if let data = querySnapshot?.documents, data.count > 0 {
-                        if let message = data[0].data()[K.FBase.bodyField] as? String {
-                            self.lastMessages[friend] = message
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        }
-                    } else {
-                        self.lastMessages[friend] = K.appStrings.startConversation + friend
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-            }
-        }
-    }
+
 }
 
 extension ContactListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friendList.count
+        return contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -105,26 +79,26 @@ extension ContactListViewController: UITableViewDataSource {
     
     func setCellUIParameters(cell: inout UITableViewCell, indexPath: IndexPath) {
         cell = UITableViewCell(style: .subtitle, reuseIdentifier: "ContactCell")
-        cell.textLabel?.text = friendList[indexPath.row]
+        cell.textLabel?.text = contacts[indexPath.row].email
         cell.backgroundColor = K.Colors.lightBlue
         cell.detailTextLabel?.numberOfLines = 2
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.font = UIFont.systemFont(ofSize: 20.0)
-        cell.detailTextLabel?.text = lastMessages[friendList[indexPath.row], default: ""]
+        cell.detailTextLabel?.text = contacts[indexPath.row].lastMessage
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 15.0)
     }
 }
 
 extension ContactListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contactChosen = friendList[indexPath.row]
+        contactChosen = contacts[indexPath.row].email
         performSegue(withIdentifier: K.SegueId.contactToConversation, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.SegueId.contactToConversation {
             let destinationVC = segue.destination as! ConversationViewController
-            destinationVC.userAddress = (Auth.auth().currentUser?.email)!
+            destinationVC.userAddress = userAddress
             destinationVC.contactAddress = contactChosen
         }
     }

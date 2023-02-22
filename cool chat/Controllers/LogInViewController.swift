@@ -39,7 +39,7 @@ class LogInViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.SegueId.logInToContactList {
             let destinationVC = segue.destination as! ContactListViewController
-            destinationVC.userAddress = FBManager.getCurrentUserEmail()!
+            destinationVC.userAddress = FBManager.getCurrentUserEmail()
         }
     }
 }

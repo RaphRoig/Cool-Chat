@@ -34,8 +34,8 @@ struct K {
     }
     
     struct FBase{
-        static let userFriendsCollection = "userFriends"
-        static let friendListField = "friendList"
+        static let userContactsCollection = "userContacts"
+        static let contactEmailListField = "contactEmailList"
         static let messageCollection = "messages"
         static let senderField = "sender"
         static let receiverField = "receiver"

@@ -44,7 +44,7 @@ class RegisterViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.SegueId.registerToContactList {
             let destinationVC = segue.destination as! ContactListViewController
-            destinationVC.userAddress = FBManager.getCurrentUserEmail()!
+            destinationVC.userAddress = FBManager.getCurrentUserEmail()
         }
     }
 }

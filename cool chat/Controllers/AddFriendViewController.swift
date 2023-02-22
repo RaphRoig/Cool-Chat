@@ -24,7 +24,7 @@ class AddFriendViewController: UIViewController {
 
     @IBAction func addFriendPressed(_ sender: UIButton) {
         if let email = emailTextField.text, email != "" {
-            let collection = db.collection(K.FBase.userFriendsCollection)
+            let collection = db.collection(K.FBase.userContactsCollection)
             let docForNewFriend = collection.document(email)
             docForNewFriend.getDocument { document1, error1 in
                 if let document1 = document1, document1.exists {
@@ -38,7 +38,7 @@ class AddFriendViewController: UIViewController {
                             if !friendList.contains(email)  {
                                 friendList.append(email)
                                 doc.setData([
-                                    K.FBase.friendListField: friendList])
+                                    K.FBase.contactEmailListField: friendList])
                                 self.navigationController?.popViewController(animated: true)
                             } else {
                                 self.emailTextField.attributedPlaceholder = NSAttributedString(
