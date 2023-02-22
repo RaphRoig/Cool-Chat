@@ -14,6 +14,7 @@
 		FB0EE53A298D8E2D003C4A1F /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EE539298D8E2D003C4A1F /* LogInViewController.swift */; };
 		FB0EE53C298EA3FA003C4A1F /* ContactListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EE53B298EA3FA003C4A1F /* ContactListViewController.swift */; };
 		FB0EE542298ECC9F003C4A1F /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EE541298ECC9F003C4A1F /* AddFriendViewController.swift */; };
+		FB48151429A63CF400C2DB27 /* FBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48151329A63CF400C2DB27 /* FBManager.swift */; };
 		FB4ABD6329916F85006C7B59 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4ABD6229916F85006C7B59 /* ConversationViewController.swift */; };
 		FB4ABD65299171A2006C7B59 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4ABD64299171A2006C7B59 /* ConversationCell.swift */; };
 		FB4ABD672991A961006C7B59 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4ABD662991A961006C7B59 /* Message.swift */; };
@@ -35,6 +36,7 @@
 		FB0EE539298D8E2D003C4A1F /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FB0EE53B298EA3FA003C4A1F /* ContactListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListViewController.swift; sourceTree = "<group>"; };
 		FB0EE541298ECC9F003C4A1F /* AddFriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		FB48151329A63CF400C2DB27 /* FBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBManager.swift; sourceTree = "<group>"; };
 		FB4ABD6229916F85006C7B59 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
 		FB4ABD64299171A2006C7B59 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		FB4ABD662991A961006C7B59 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			children = (
 				FB4ABD64299171A2006C7B59 /* ConversationCell.swift */,
 				FB4ABD662991A961006C7B59 /* Message.swift */,
+				FB48151329A63CF400C2DB27 /* FBManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				FB4ABD65299171A2006C7B59 /* ConversationCell.swift in Sources */,
 				FB0EE53A298D8E2D003C4A1F /* LogInViewController.swift in Sources */,
 				FB4ABD672991A961006C7B59 /* Message.swift in Sources */,
+				FB48151429A63CF400C2DB27 /* FBManager.swift in Sources */,
 				FB51193D298D3C2C00275A1F /* AppDelegate.swift in Sources */,
 				FB51193F298D3C2C00275A1F /* SceneDelegate.swift in Sources */,
 				FB0EE53C298EA3FA003C4A1F /* ContactListViewController.swift in Sources */,

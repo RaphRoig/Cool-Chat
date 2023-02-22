@@ -16,26 +16,30 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
     }
-
-
+    
+    func updateUI() {
+        updateTextFields()
+    }
+    
+    func updateTextFields() {
+        emailTextField.layer.cornerRadius = 10.0
+        passwordTextField.layer.cornerRadius = 10.0
+        emailTextField.clipsToBounds = true
+        passwordTextField.clipsToBounds = true
+    }
+    
     @IBAction func logInPressed(_ sender: UIButton) {
         if let email = emailTextField.text, let password = passwordTextField.text {
-            Auth.auth().signIn(withEmail: email, password: password) { AuthDataResult, error in
-                if let error {
-                    print(error)
-                } else {
-                    self.performSegue(withIdentifier: K.SegueId.logInToContactList, sender: self)
-                    
-                }
-            }
+            FBManager.logUserInAndPerformSegue(withEmail: email, password: password, segueID: K.SegueId.logInToContactList, origin: self)
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.SegueId.logInToContactList {
             let destinationVC = segue.destination as! ContactListViewController
-            destinationVC.userAddress = (Auth.auth().currentUser?.email)!
+            destinationVC.userAddress = FBManager.getCurrentUserEmail()!
         }
     }
 }
